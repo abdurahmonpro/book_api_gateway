@@ -92,7 +92,7 @@ definitions:
       pages:
         type: integer
       published:
-        type: integer
+        type: string
       status:
         description: 0-new, 1-reading, 2-finished,
         type: integer
@@ -112,7 +112,7 @@ definitions:
       pages:
         type: integer
       published:
-        type: integer
+        type: string
       status:
         description: 0-new, 1-reading, 2-finished,
         type: integer
@@ -138,7 +138,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /book:
+  /books:
     get:
       consumes:
       - application/json
@@ -235,7 +235,52 @@ paths:
       summary: Create Book
       tags:
       - Book
-  /book/{id}:
+  /books/:title:
+    get:
+      consumes:
+      - application/json
+      description: Get Book By title
+      operationId: get_book_by_title
+      parameters:
+      - description: title
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: BookBody
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/book_service.Book'
+              type: object
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Book By title
+      tags:
+      - Book
+  /books/{id}:
     delete:
       consumes:
       - application/json
@@ -278,50 +323,6 @@ paths:
                   type: string
               type: object
       summary: Delete Book
-      tags:
-      - Book
-    get:
-      consumes:
-      - application/json
-      description: Get Book By ID
-      operationId: get_book_by_id
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: BookBody
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/book_service.Book'
-              type: object
-        "400":
-          description: Invalid Argument
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  type: string
-              type: object
-        "500":
-          description: Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  type: string
-              type: object
-      summary: Get Book By ID
       tags:
       - Book
     patch:
@@ -424,51 +425,6 @@ paths:
       summary: Update Book
       tags:
       - Book
-  /book/title/{title}:
-    get:
-      consumes:
-      - application/json
-      description: Get Book By title
-      operationId: get_book_by_title
-      parameters:
-      - description: title
-        in: path
-        name: title
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: BookBody
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/book_service.Book'
-              type: object
-        "400":
-          description: Invalid Argument
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  type: string
-              type: object
-        "500":
-          description: Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/http.Response'
-            - properties:
-                data:
-                  type: string
-              type: object
-      summary: Get Book By title
-      tags:
-      - Book
   /login:
     post:
       consumes:
@@ -515,16 +471,50 @@ paths:
       summary: Login
       tags:
       - Authentication
-  /register:
+  /myself:
+    get:
+      consumes:
+      - application/json
+      description: Get Myself
+      operationId: get_user_myself
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User
+          schema:
+            $ref: '#/definitions/auth_service.User'
+        "400":
+          description: Invalid Argument
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/http.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get Myself
+      tags:
+      - User
+  /signup:
     post:
       consumes:
       - application/json
-      description: Register
-      operationId: register
+      description: Signup
+      operationId: Signup
       parameters:
       - description: CreateUserRequest
         in: body
-        name: register
+        name: signup
         required: true
         schema:
           $ref: '#/definitions/auth_service.CreateUser'
@@ -558,7 +548,7 @@ paths:
                 data:
                   type: string
               type: object
-      summary: Register
+      summary: Signup
       tags:
       - Authentication
   /user:

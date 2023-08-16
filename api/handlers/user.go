@@ -25,7 +25,6 @@ import (
 func (h *Handler) CreateUser(c *gin.Context) {
 	var User auth_service.CreateUser
 	err := c.ShouldBindJSON(&User)
-	//SHA256:gl+CHC3fIz8gz+0chi6/joMbCNWTIa1NjHJEIfCRzCA <comment>
 	if err != nil {
 		h.handleResponse(c, http.BadRequest, err.Error())
 		return
@@ -73,6 +72,35 @@ func (h *Handler) GetUserById(c *gin.Context) {
 	}
 	h.handleResponse(c, http.OK, resp)
 }
+
+// GetMyself godoc
+// @ID get_user_myself
+// @Router /myself [GET]
+// @Summary Get Myself
+// @Description Get Myself
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} auth_service.User "User"
+// @Response 400 {object} http.Response{data=string} "Invalid Argument"
+// @Failure 500 {object} http.Response{data=string} "Server Error"
+func (h *Handler) GetMyself(c *gin.Context) {
+	
+    resp, err := h.services.UserService().GetUserByName(
+        context.Background(),
+        &auth_service.GetByName{
+            Name: "abdurahmon", 
+        },
+    )
+    if err != nil {
+        h.handleResponse(c, http.GRPCError, err.Error())
+        return
+    }
+
+    h.handleResponse(c, http.OK, resp)
+}
+
+
 //  @Security ApiKeyAuth
 // GetUserList godoc
 // @ID get_user_list

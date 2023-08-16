@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/book": {
+        "/books": {
             "get": {
                 "description": "Get Book List",
                 "consumes": [
@@ -189,7 +189,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/book/title/{title}": {
+        "/books/:title": {
             "get": {
                 "description": "Get Book By title",
                 "consumes": [
@@ -270,86 +270,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/book/{id}": {
-            "get": {
-                "description": "Get Book By ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Get Book By ID",
-                "operationId": "get_book_by_id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "BookBody",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.Book"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid Argument",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
+        "/books/{id}": {
             "put": {
                 "description": "Update Book",
                 "consumes": [
@@ -689,9 +610,69 @@ const docTemplate = `{
                 }
             }
         },
-        "/register": {
+        "/myself": {
+            "get": {
+                "description": "Get Myself",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Myself",
+                "operationId": "get_user_myself",
+                "responses": {
+                    "200": {
+                        "description": "User",
+                        "schema": {
+                            "$ref": "#/definitions/auth_service.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argument",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/http.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/http.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/signup": {
             "post": {
-                "description": "Register",
+                "description": "Signup",
                 "consumes": [
                     "application/json"
                 ],
@@ -701,12 +682,12 @@ const docTemplate = `{
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "Register",
-                "operationId": "register",
+                "summary": "Signup",
+                "operationId": "Signup",
                 "parameters": [
                     {
                         "description": "CreateUserRequest",
-                        "name": "register",
+                        "name": "signup",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -1067,7 +1048,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "published": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "status": {
                     "description": "0-new, 1-reading, 2-finished,",
@@ -1097,7 +1078,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "published": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "status": {
                     "description": "0-new, 1-reading, 2-finished,",

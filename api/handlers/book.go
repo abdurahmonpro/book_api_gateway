@@ -13,7 +13,7 @@ import (
 
 // CreateBook godoc
 // @ID create_book
-// @Router /book [POST]
+// @Router /books [POST]
 // @Summary Create Book
 // @Description  Create Book
 // @Tags Book
@@ -44,43 +44,9 @@ func (h *Handler) CreateBook(c *gin.Context) {
 	h.handleResponse(c, http.Created, resp)
 }
 
-// GetBookByID godoc
-// @ID get_book_by_id
-// @Router /book/{id} [GET]
-// @Summary Get Book By ID
-// @Description Get Book By ID
-// @Tags Book
-// @Accept json
-// @Produce json
-// @Param id path string true "id"
-// @Success 200 {object} http.Response{data=book_service.Book} "BookBody"
-// @Response 400 {object} http.Response{data=string} "Invalid Argument"
-// @Failure 500 {object} http.Response{data=string} "Server Error"
-func (h *Handler) GetBookByID(c *gin.Context) {
-	BookId := c.Param("id")
-
-	if !util.IsValidUUID(BookId) {
-		h.handleResponse(c, http.InvalidArgument, "Book id is an invalid uuid")
-		return
-	}
-
-	resp, err := h.services.BookService().GetByID(
-		context.Background(),
-		&book_service.BookPK{
-			Id: BookId,
-		},
-	)
-	if err != nil {
-		h.handleResponse(c, http.GRPCError, err.Error())
-		return
-	}
-
-	h.handleResponse(c, http.OK, resp)
-}
-
 // GetBookByTitle godoc
 // @ID get_book_by_title
-// @Router /book/title/{title} [GET]
+// @Router /books/:title [GET]
 // @Summary Get Book By title
 // @Description Get Book By title
 // @Tags Book
@@ -109,7 +75,7 @@ func (h *Handler) GetBookByTitle(c *gin.Context) {
 
 // GetBookList godoc
 // @ID get_book_list
-// @Router /book [GET]
+// @Router /books [GET]
 // @Summary Get Book List
 // @Description Get Book List
 // @Tags Book
@@ -153,7 +119,7 @@ func (h *Handler) GetBookList(c *gin.Context) {
 }
 
 // @ID update_book
-// @Router /book/{id} [PUT]
+// @Router /books/{id} [PUT]
 // @Summary Update Book
 // @Description Update Book
 // @Tags Book
@@ -196,7 +162,7 @@ func (h *Handler) UpdateBook(c *gin.Context) {
 
 // PatchCBook godoc
 // @ID patch_book
-// @Router /book/{id} [PATCH]
+// @Router /books/{id} [PATCH]
 // @Summary Patch Book
 // @Description Patch Book
 // @Tags Book
@@ -248,7 +214,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 
 // DeleteBook godoc
 // @ID delete_book
-// @Router /book/{id} [DELETE]
+// @Router /books/{id} [DELETE]
 // @Summary Delete Book
 // @Description Delete Book
 // @Tags Book

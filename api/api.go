@@ -19,22 +19,23 @@ func SetUpAPI(r *gin.Engine, h handlers.Handler, cfg config.Config) {
 	r.Use(customCORSMiddleware())
 
 	// book
-	r.POST("/book", h.CreateBook)
-	r.GET("/book", h.GetBookList)
-	r.GET("/book/:id", h.GetBookByID)
-	r.GET("/book/title/:title", h.GetBookByTitle)
-	r.PUT("/book/:id", h.UpdateBook)
-	r.PATCH("/book/:id", h.UpdatePatchBook)
-	r.DELETE("/book/:id", h.DeleteBook)
+	r.POST("/books", h.CreateBook)
+	r.GET("/books", h.GetBookList)
+	// r.GET("/book/:id", h.GetBookByID)
+	r.GET("/books/:title", h.GetBookByTitle)
+	r.PUT("/books/:id", h.UpdateBook)
+	r.PATCH("/books/:id", h.UpdatePatchBook)
+	r.DELETE("/books/:id", h.DeleteBook)
 
 	//user service
 	r.POST("/user", h.CreateUser)
 	r.GET("/user/:id", h.GetUserById)
+	r.GET("/myself", h.GetMyself)
 	r.GET("/user", h.AuthMiddleware(), h.GetUserList)
 
 	//login
 	r.POST("/login", h.Login)
-	r.POST("/register", h.Register)
+	r.POST("/signup", h.Register)
 	url := ginSwagger.URL("swagger/doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 }

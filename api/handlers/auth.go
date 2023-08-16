@@ -93,3 +93,4 @@ func (h *Handler) Register(c *gin.Context) {
 
 	h.handleResponse(c, http.Created, resp)
 }
+
