@@ -24,8 +24,6 @@ definitions:
     type: object
   auth_service.User:
     properties:
-      created_at:
-        type: string
       email:
         type: string
       id:
@@ -35,8 +33,6 @@ definitions:
       name:
         type: string
       secret:
-        type: string
-      updated_at:
         type: string
     type: object
   auth_service.UserListResponse:
@@ -54,8 +50,6 @@ definitions:
         type: string
       cover:
         type: string
-      created_at:
-        type: string
       id:
         type: string
       isbn:
@@ -69,8 +63,13 @@ definitions:
         type: integer
       title:
         type: string
-      updated_at:
-        type: string
+    type: object
+  book_service.BookData:
+    properties:
+      book:
+        $ref: '#/definitions/book_service.Book'
+      status:
+        type: integer
     type: object
   book_service.BookListResponse:
     properties:
@@ -83,20 +82,18 @@ definitions:
     type: object
   book_service.CreateBook:
     properties:
-      author:
-        type: string
-      cover:
-        type: string
       isbn:
         type: string
-      pages:
-        type: integer
-      published:
-        type: string
-      status:
-        description: 0-new, 1-reading, 2-finished,
-        type: integer
-      title:
+    type: object
+  book_service.CreateBookResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/book_service.BookData'
+        type: array
+      is_ok:
+        type: boolean
+      message:
         type: string
     type: object
   book_service.UpdateBook:
@@ -212,7 +209,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.Book'
+                  $ref: '#/definitions/book_service.CreateBookResponse'
               type: object
         "400":
           description: Invalid Argument

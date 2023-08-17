@@ -143,7 +143,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.Book"
+                                            "$ref": "#/definitions/book_service.CreateBookResponse"
                                         }
                                     }
                                 }
@@ -945,9 +945,6 @@ const docTemplate = `{
         "auth_service.User": {
             "type": "object",
             "properties": {
-                "created_at": {
-                    "type": "string"
-                },
                 "email": {
                     "type": "string"
                 },
@@ -961,9 +958,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "secret": {
-                    "type": "string"
-                },
-                "updated_at": {
                     "type": "string"
                 }
             }
@@ -991,9 +985,6 @@ const docTemplate = `{
                 "cover": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -1012,9 +1003,17 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "book_service.BookData": {
+            "type": "object",
+            "properties": {
+                "book": {
+                    "$ref": "#/definitions/book_service.Book"
                 },
-                "updated_at": {
-                    "type": "string"
+                "status": {
+                    "type": "integer"
                 }
             }
         },
@@ -1035,26 +1034,24 @@ const docTemplate = `{
         "book_service.CreateBook": {
             "type": "object",
             "properties": {
-                "author": {
-                    "type": "string"
-                },
-                "cover": {
-                    "type": "string"
-                },
                 "isbn": {
                     "type": "string"
+                }
+            }
+        },
+        "book_service.CreateBookResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/book_service.BookData"
+                    }
                 },
-                "pages": {
-                    "type": "integer"
+                "is_ok": {
+                    "type": "boolean"
                 },
-                "published": {
-                    "type": "string"
-                },
-                "status": {
-                    "description": "0-new, 1-reading, 2-finished,",
-                    "type": "integer"
-                },
-                "title": {
+                "message": {
                     "type": "string"
                 }
             }

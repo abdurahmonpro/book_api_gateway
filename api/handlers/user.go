@@ -101,7 +101,7 @@ func (h *Handler) GetMyself(c *gin.Context) {
 }
 
 
-//  @Security ApiKeyAuth
+// @Security ApiKeyAuth
 // GetUserList godoc
 // @ID get_user_list
 // @Router /user [GET]

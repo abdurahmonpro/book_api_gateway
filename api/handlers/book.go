@@ -20,7 +20,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param profile body book_service.CreateBook true "CreateBookRequestBody"
-// @Success 200 {object} http.Response{data=book_service.Book} "GetBookBody"
+// @Success 200 {object} http.Response{data=book_service.CreateBookResponse} "GetBookBody"
 // @Response 400 {object} http.Response{data=string} "Invalid Argument"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) CreateBook(c *gin.Context) {

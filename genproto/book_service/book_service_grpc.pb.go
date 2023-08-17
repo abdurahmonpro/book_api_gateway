@@ -33,13 +33,13 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BookServiceClient interface {
-	Create(ctx context.Context, in *CreateBook, opts ...grpc.CallOption) (*Book, error)
+	Create(ctx context.Context, in *CreateBook, opts ...grpc.CallOption) (*CreateBookResponse, error)
 	GetByID(ctx context.Context, in *BookPK, opts ...grpc.CallOption) (*Book, error)
 	GetList(ctx context.Context, in *BookListRequest, opts ...grpc.CallOption) (*BookListResponse, error)
 	Update(ctx context.Context, in *UpdateBook, opts ...grpc.CallOption) (*Book, error)
 	UpdatePatch(ctx context.Context, in *UpdatePatchBook, opts ...grpc.CallOption) (*Book, error)
 	Delete(ctx context.Context, in *BookPK, opts ...grpc.CallOption) (*empty.Empty, error)
-	GetBookByTitle(ctx context.Context, in *BookByTitle, opts ...grpc.CallOption) (*Book, error)
+	GetBookByTitle(ctx context.Context, in *BookByTitle, opts ...grpc.CallOption) (*CreateBookResponse, error)
 }
 
 type bookServiceClient struct {
@@ -50,8 +50,8 @@ func NewBookServiceClient(cc grpc.ClientConnInterface) BookServiceClient {
 	return &bookServiceClient{cc}
 }
 
-func (c *bookServiceClient) Create(ctx context.Context, in *CreateBook, opts ...grpc.CallOption) (*Book, error) {
-	out := new(Book)
+func (c *bookServiceClient) Create(ctx context.Context, in *CreateBook, opts ...grpc.CallOption) (*CreateBookResponse, error) {
+	out := new(CreateBookResponse)
 	err := c.cc.Invoke(ctx, BookService_Create_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,8 +104,8 @@ func (c *bookServiceClient) Delete(ctx context.Context, in *BookPK, opts ...grpc
 	return out, nil
 }
 
-func (c *bookServiceClient) GetBookByTitle(ctx context.Context, in *BookByTitle, opts ...grpc.CallOption) (*Book, error) {
-	out := new(Book)
+func (c *bookServiceClient) GetBookByTitle(ctx context.Context, in *BookByTitle, opts ...grpc.CallOption) (*CreateBookResponse, error) {
+	out := new(CreateBookResponse)
 	err := c.cc.Invoke(ctx, BookService_GetBookByTitle_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -117,13 +117,13 @@ func (c *bookServiceClient) GetBookByTitle(ctx context.Context, in *BookByTitle,
 // All implementations must embed UnimplementedBookServiceServer
 // for forward compatibility
 type BookServiceServer interface {
-	Create(context.Context, *CreateBook) (*Book, error)
+	Create(context.Context, *CreateBook) (*CreateBookResponse, error)
 	GetByID(context.Context, *BookPK) (*Book, error)
 	GetList(context.Context, *BookListRequest) (*BookListResponse, error)
 	Update(context.Context, *UpdateBook) (*Book, error)
 	UpdatePatch(context.Context, *UpdatePatchBook) (*Book, error)
 	Delete(context.Context, *BookPK) (*empty.Empty, error)
-	GetBookByTitle(context.Context, *BookByTitle) (*Book, error)
+	GetBookByTitle(context.Context, *BookByTitle) (*CreateBookResponse, error)
 	mustEmbedUnimplementedBookServiceServer()
 }
 
@@ -131,7 +131,7 @@ type BookServiceServer interface {
 type UnimplementedBookServiceServer struct {
 }
 
-func (UnimplementedBookServiceServer) Create(context.Context, *CreateBook) (*Book, error) {
+func (UnimplementedBookServiceServer) Create(context.Context, *CreateBook) (*CreateBookResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (UnimplementedBookServiceServer) GetByID(context.Context, *BookPK) (*Book, error) {
@@ -149,7 +149,7 @@ func (UnimplementedBookServiceServer) UpdatePatch(context.Context, *UpdatePatchB
 func (UnimplementedBookServiceServer) Delete(context.Context, *BookPK) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedBookServiceServer) GetBookByTitle(context.Context, *BookByTitle) (*Book, error) {
+func (UnimplementedBookServiceServer) GetBookByTitle(context.Context, *BookByTitle) (*CreateBookResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookByTitle not implemented")
 }
 func (UnimplementedBookServiceServer) mustEmbedUnimplementedBookServiceServer() {}
