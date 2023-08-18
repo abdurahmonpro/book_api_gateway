@@ -71,21 +71,7 @@ definitions:
       status:
         type: integer
     type: object
-  book_service.BookListResponse:
-    properties:
-      books:
-        items:
-          $ref: '#/definitions/book_service.Book'
-        type: array
-      count:
-        type: integer
-    type: object
-  book_service.CreateBook:
-    properties:
-      isbn:
-        type: string
-    type: object
-  book_service.CreateBookResponse:
+  book_service.BookResponse:
     properties:
       data:
         items:
@@ -94,6 +80,11 @@ definitions:
       is_ok:
         type: boolean
       message:
+        type: string
+    type: object
+  book_service.CreateBook:
+    properties:
+      isbn:
         type: string
     type: object
   book_service.UpdateBook:
@@ -126,11 +117,10 @@ definitions:
     type: object
   models.UpdatePatchRequest:
     properties:
-      fields:
-        additionalProperties: true
-        type: object
       id:
         type: string
+      status:
+        type: integer
     type: object
 info:
   contact: {}
@@ -158,13 +148,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: BookListResponseBody
+          description: BookResponseBody
           schema:
             allOf:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.BookListResponse'
+                  $ref: '#/definitions/book_service.BookResponse'
               type: object
         "400":
           description: Invalid Argument
@@ -209,7 +199,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.CreateBookResponse'
+                  $ref: '#/definitions/book_service.BookResponse'
               type: object
         "400":
           description: Invalid Argument
@@ -254,7 +244,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.Book'
+                  $ref: '#/definitions/book_service.BookResponse'
               type: object
         "400":
           description: Invalid Argument
@@ -299,7 +289,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  type: object
+                  $ref: '#/definitions/book_service.BookResponse'
               type: object
         "400":
           description: Bad Request
@@ -349,7 +339,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.Book'
+                  $ref: '#/definitions/book_service.BookResponse'
               type: object
         "400":
           description: Bad Request

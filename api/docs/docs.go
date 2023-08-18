@@ -52,7 +52,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "BookListResponseBody",
+                        "description": "BookResponseBody",
                         "schema": {
                             "allOf": [
                                 {
@@ -62,7 +62,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.BookListResponse"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -143,7 +143,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.CreateBookResponse"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -224,7 +224,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.Book"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -393,7 +393,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "object"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -481,7 +481,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.Book"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -1017,29 +1017,7 @@ const docTemplate = `{
                 }
             }
         },
-        "book_service.BookListResponse": {
-            "type": "object",
-            "properties": {
-                "books": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/book_service.Book"
-                    }
-                },
-                "count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "book_service.CreateBook": {
-            "type": "object",
-            "properties": {
-                "isbn": {
-                    "type": "string"
-                }
-            }
-        },
-        "book_service.CreateBookResponse": {
+        "book_service.BookResponse": {
             "type": "object",
             "properties": {
                 "data": {
@@ -1052,6 +1030,14 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "book_service.CreateBook": {
+            "type": "object",
+            "properties": {
+                "isbn": {
                     "type": "string"
                 }
             }
@@ -1101,12 +1087,11 @@ const docTemplate = `{
         "models.UpdatePatchRequest": {
             "type": "object",
             "properties": {
-                "fields": {
-                    "type": "object",
-                    "additionalProperties": true
-                },
                 "id": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         }

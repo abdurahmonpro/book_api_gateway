@@ -4,7 +4,6 @@ import (
 	"api_gateway/api/http"
 	"api_gateway/genproto/book_service"
 	"api_gateway/models"
-	"api_gateway/pkg/helper"
 	"api_gateway/pkg/util"
 	"context"
 
@@ -20,7 +19,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param profile body book_service.CreateBook true "CreateBookRequestBody"
-// @Success 200 {object} http.Response{data=book_service.CreateBookResponse} "GetBookBody"
+// @Success 200 {object} http.Response{data=book_service.BookResponse} "GetBookBody"
 // @Response 400 {object} http.Response{data=string} "Invalid Argument"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) CreateBook(c *gin.Context) {
@@ -53,7 +52,7 @@ func (h *Handler) CreateBook(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param title path string true "title"
-// @Success 200 {object} http.Response{data=book_service.Book} "BookBody"
+// @Success 200 {object} http.Response{data=book_service.BookResponse} "BookBody"
 // @Response 400 {object} http.Response{data=string} "Invalid Argument"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetBookByTitle(c *gin.Context) {
@@ -84,7 +83,7 @@ func (h *Handler) GetBookByTitle(c *gin.Context) {
 // @Param offset query integer false "offset"
 // @Param limit query integer false "limit"
 // @Param search query string false "search"
-// @Success 200 {object} http.Response{data=book_service.BookListResponse} "BookListResponseBody"
+// @Success 200 {object} http.Response{data=book_service.BookResponse} "BookResponseBody"
 // @Response 400 {object} http.Response{data=string} "Invalid Argument"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetBookList(c *gin.Context) {
@@ -170,11 +169,10 @@ func (h *Handler) UpdateBook(c *gin.Context) {
 // @Produce json
 // @Param id path string true "id"
 // @Param profile body models.UpdatePatchRequest true "UpdatePatchRequestBody"
-// @Success 200 {object} http.Response{data=book_service.Book} "Book data"
+// @Success 200 {object} http.Response{data=book_service.BookResponse} "Book data"
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) UpdatePatchBook(c *gin.Context) {
-
 	var updatePatchBook models.UpdatePatchRequest
 
 	err := c.ShouldBindJSON(&updatePatchBook)
@@ -190,17 +188,11 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 		return
 	}
 
-	structData, err := helper.ConvertMapToStruct(updatePatchBook.Fields)
-	if err != nil {
-		h.handleResponse(c, http.InvalidArgument, err.Error())
-		return
-	}
-
 	resp, err := h.services.BookService().UpdatePatch(
 		c.Request.Context(),
 		&book_service.UpdatePatchBook{
 			Id:     updatePatchBook.Id,
-			Fields: structData,
+			Status: updatePatchBook.Status, // Use the new 'Status' field
 		},
 	)
 
@@ -221,7 +213,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "id"
-// @Success 200 {object} http.Response{data=object{}} "Book data"
+// @Success 200 {object} http.Response{data=book_service.BookResponse} "Book data"
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) DeleteBook(c *gin.Context) {

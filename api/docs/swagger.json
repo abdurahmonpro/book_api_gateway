@@ -40,7 +40,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "BookListResponseBody",
+                        "description": "BookResponseBody",
                         "schema": {
                             "allOf": [
                                 {
@@ -50,7 +50,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.BookListResponse"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -131,7 +131,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.CreateBookResponse"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -212,7 +212,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.Book"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -381,7 +381,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "object"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -469,7 +469,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.Book"
+                                            "$ref": "#/definitions/book_service.BookResponse"
                                         }
                                     }
                                 }
@@ -1005,29 +1005,7 @@
                 }
             }
         },
-        "book_service.BookListResponse": {
-            "type": "object",
-            "properties": {
-                "books": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/book_service.Book"
-                    }
-                },
-                "count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "book_service.CreateBook": {
-            "type": "object",
-            "properties": {
-                "isbn": {
-                    "type": "string"
-                }
-            }
-        },
-        "book_service.CreateBookResponse": {
+        "book_service.BookResponse": {
             "type": "object",
             "properties": {
                 "data": {
@@ -1040,6 +1018,14 @@
                     "type": "boolean"
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "book_service.CreateBook": {
+            "type": "object",
+            "properties": {
+                "isbn": {
                     "type": "string"
                 }
             }
@@ -1089,12 +1075,11 @@
         "models.UpdatePatchRequest": {
             "type": "object",
             "properties": {
-                "fields": {
-                    "type": "object",
-                    "additionalProperties": true
-                },
                 "id": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         }
