@@ -179,6 +179,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) DeleteBook(c *gin.Context) {
 	BookId := c.Query("id")
+	fmt.Println(BookId)
 
 	intbookid, err := strconv.Atoi(BookId)
 	if err != nil {
@@ -194,6 +195,8 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 		&book_service.BookPK{Id: int32(intbookid)},
 	)
 	if err != nil {
+		fmt.Println("############################")
+		fmt.Println("############################")
 		h.handleResponse(c, http.GRPCError, err.Error())
 		return
 	}
