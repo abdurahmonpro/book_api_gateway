@@ -178,26 +178,23 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) DeleteBook(c *gin.Context) {
-	BookId := c.Query("id")
-	fmt.Println(BookId)
+	// Get the ID from the path parameter
+	bookID := c.Param("id")
+	fmt.Println(bookID)
 
-	intbookid, err := strconv.Atoi(BookId)
+	intBookID, err := strconv.Atoi(bookID)
 	if err != nil {
-		fmt.Println("****************5***********")
-		fmt.Println("****************5***********")
-		fmt.Println("****************5***********")
-		fmt.Println("****************5***********")
+		fmt.Println(intBookID)
+		h.handleResponse(c, http.BadRequest, "Invalid ID")
 		return
 	}
 
 	resp, err := h.services.BookService().Delete(
 		c.Request.Context(),
-		&book_service.BookPK{Id: int32(intbookid)},
+		&book_service.BookPK{Id: int32(intBookID)},
 	)
 	if err != nil {
-		fmt.Println("############################")
-		fmt.Println("############################")
-		h.handleResponse(c, http.GRPCError, err.Error())
+		h.handleResponse(c, http.InternalServerError, err.Error())
 		return
 	}
 
