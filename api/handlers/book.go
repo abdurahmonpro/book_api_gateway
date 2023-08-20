@@ -6,6 +6,7 @@ import (
 	"api_gateway/genproto/book_service"
 	"api_gateway/models"
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -191,6 +192,9 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 	)
 	if err != nil {
 		h.handleResponse(c, http.GRPCError, err.Error())
+		fmt.Println("**********************************************************")
+		fmt.Println("**********************************************************")
+		fmt.Println("**********************************************************")
 		return
 	}
 
