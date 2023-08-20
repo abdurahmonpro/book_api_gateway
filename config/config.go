@@ -53,16 +53,16 @@ func Load() Config {
 	config := Config{}
 
 	config.ServiceName = cast.ToString(getOrReturnDefaultValue("SERVICE_NAME", "api_gateways"))
-	config.ServiceHost = cast.ToString(getOrReturnDefaultValue("SERVICE_HOST", "localhost"))
+	config.ServiceHost = cast.ToString(getOrReturnDefaultValue("SERVICE_HOST", "3.72.3.59"))
 	config.ServicePort = cast.ToString(getOrReturnDefaultValue("SERVICE_PORT", ":7000"))
 
 	config.Environment = cast.ToString(getOrReturnDefaultValue("ENVIRONMENT", DebugMode))
 	config.Version = cast.ToString(getOrReturnDefaultValue("VERSION", "1.0"))
 
-	config.AuthServiceHost = cast.ToString(getOrReturnDefaultValue("AUTH_SERVICE_HOST", "localhost"))
+	config.AuthServiceHost = cast.ToString(getOrReturnDefaultValue("AUTH_SERVICE_HOST", "3.72.3.59"))
 	config.AuthGRPCPort = cast.ToString(getOrReturnDefaultValue("AUTH_SERVICE_PORT", ":9102"))
 
-	config.BookServiceHost = cast.ToString(getOrReturnDefaultValue("BOOK_SERVICE_HOST", "localhost"))
+	config.BookServiceHost = cast.ToString(getOrReturnDefaultValue("BOOK_SERVICE_HOST", "3.72.3.59"))
 	config.BookGRPCPort = cast.ToString(getOrReturnDefaultValue("BOOK_SERVICE_PORT", ":9101"))
 
 	config.SecretKey = "hello"
@@ -70,7 +70,7 @@ func Load() Config {
 	config.DefaultOffset = cast.ToString(getOrReturnDefaultValue("DEFAULT_OFFSET", "0"))
 	config.DefaultLimit = cast.ToString(getOrReturnDefaultValue("DEFAULT_LIMIT", "10"))
 
-	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "0.0.0.0"))
+	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "3.72.3.59"))
 	config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 5432))
 	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "abdurahmon"))
 	config.PostgresPassword = cast.ToString(getOrReturnDefaultValue("POSTGRES_PASSWORD", "aus1003"))

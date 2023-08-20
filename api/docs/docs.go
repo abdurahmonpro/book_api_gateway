@@ -16,517 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/books": {
-            "get": {
-                "description": "Get Book List",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Get Book List",
-                "operationId": "get_book_list",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "offset",
-                        "name": "offset",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "limit",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "search",
-                        "name": "search",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "BookResponseBody",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid Argument",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create Book",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Create Book",
-                "operationId": "create_book",
-                "parameters": [
-                    {
-                        "description": "CreateBookRequestBody",
-                        "name": "profile",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/book_service.CreateBook"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "GetBookBody",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid Argument",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "/books/:title": {
-            "get": {
-                "description": "Get Book By title",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Get Book By title",
-                "operationId": "get_book_by_title",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "title",
-                        "name": "title",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "BookBody",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid Argument",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "/books/{id}": {
-            "put": {
-                "description": "Update Book",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Update Book",
-                "operationId": "update_book",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "UpdateBookRequestBody",
-                        "name": "profile",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/book_service.UpdateBook"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Book data",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.Book"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete Book",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Delete Book",
-                "operationId": "delete_book",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Book data",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "description": "Patch Book",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Patch Book",
-                "operationId": "patch_book",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "UpdatePatchRequestBody",
-                        "name": "profile",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.UpdatePatchRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Book data",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
         "/login": {
             "post": {
                 "description": "Login",
@@ -626,27 +115,15 @@ const docTemplate = `{
                 "operationId": "get_user_myself",
                 "responses": {
                     "200": {
-                        "description": "User",
+                        "description": "CreateUserResponse",
                         "schema": {
-                            "$ref": "#/definitions/auth_service.User"
+                            "$ref": "#/definitions/auth_service.CreateUserResponse"
                         }
                     },
                     "401": {
                         "description": "the sign is invalid",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/http.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/auth_service.UserWrongResponse"
                         }
                     },
                     "500": {
@@ -923,6 +400,23 @@ const docTemplate = `{
                 }
             }
         },
+        "auth_service.CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/auth_service.User"
+                    }
+                },
+                "is_ok": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "auth_service.LoginRequest": {
             "type": "object",
             "properties": {
@@ -949,7 +443,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "key": {
                     "type": "string"
@@ -976,98 +470,16 @@ const docTemplate = `{
                 }
             }
         },
-        "book_service.Book": {
-            "type": "object",
-            "properties": {
-                "author": {
-                    "type": "string"
-                },
-                "cover": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "isbn": {
-                    "type": "string"
-                },
-                "pages": {
-                    "type": "integer"
-                },
-                "published": {
-                    "type": "string"
-                },
-                "status": {
-                    "description": "0-new, 1-reading, 2-finished,",
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "book_service.BookData": {
-            "type": "object",
-            "properties": {
-                "book": {
-                    "$ref": "#/definitions/book_service.Book"
-                },
-                "status": {
-                    "type": "integer"
-                }
-            }
-        },
-        "book_service.BookResponse": {
+        "auth_service.UserWrongResponse": {
             "type": "object",
             "properties": {
                 "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/book_service.BookData"
-                    }
+                    "type": "string"
                 },
                 "is_ok": {
                     "type": "boolean"
                 },
                 "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "book_service.CreateBook": {
-            "type": "object",
-            "properties": {
-                "isbn": {
-                    "type": "string"
-                }
-            }
-        },
-        "book_service.UpdateBook": {
-            "type": "object",
-            "properties": {
-                "author": {
-                    "type": "string"
-                },
-                "cover": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "isbn": {
-                    "type": "string"
-                },
-                "pages": {
-                    "type": "integer"
-                },
-                "published": {
-                    "type": "string"
-                },
-                "status": {
-                    "description": "0-new, 1-reading, 2-finished,",
-                    "type": "integer"
-                },
-                "title": {
                     "type": "string"
                 }
             }
@@ -1081,17 +493,6 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "string"
-                }
-            }
-        },
-        "models.UpdatePatchRequest": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
                 }
             }
         }

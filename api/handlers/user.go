@@ -3,9 +3,9 @@ package handlers
 import (
 	"api_gateway/api/http"
 	"api_gateway/genproto/auth_service"
-	"api_gateway/pkg/util"
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -56,14 +56,24 @@ func (h *Handler) CreateUser(c *gin.Context) {
 // @Failure 500 {object} string "Server Error"
 func (h *Handler) GetUserById(c *gin.Context) {
 	UserID := c.Param("id")
-	if !util.IsValidUUID(UserID) {
-		h.handleResponse(c, http.InvalidArgument, "User ID is an invalid UUID")
+
+	// if !util.IsValidUUID(UserID) {
+	// 	h.handleResponse(c, http.InvalidArgument, "User ID is an invalid UUID")
+	// 	return
+	// }
+
+	userIDInt, err := strconv.Atoi(UserID)
+	if err != nil {
+		h.handleResponse(c, http.InvalidArgument, "User ID is not a valid integer")
 		return
 	}
+
+	var int32Value int32 = int32(userIDInt)
+
 	resp, err := h.services.UserService().GetByID(
 		context.Background(),
 		&auth_service.UserPK{
-			Id: UserID,
+			Id: int32Value,
 		},
 	)
 	if err != nil {
@@ -81,25 +91,28 @@ func (h *Handler) GetUserById(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Success 200 {object} auth_service.User "User"
-// @Response 401 {object} http.Response{data=string} "the sign is invalid"
+// @Success 200 {object} auth_service.CreateUserResponse "CreateUserResponse"
+// @Response 401 {object} auth_service.UserWrongResponse "the sign is invalid"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetMyself(c *gin.Context) {
-	
-    resp, err := h.services.UserService().GetUserByName(
-        context.Background(),
-        &auth_service.GetByName{
-            Name: "abdurahmon", 
-        },
-    )
-    if err != nil {
-        h.handleResponse(c, http.Unauthorized, err.Error())
-        return
-    }
 
-    h.handleResponse(c, http.OK, resp)
+	resp, err := h.services.UserService().GetUserByName(
+		context.Background(),
+		&auth_service.GetByName{
+			Name: "abdurahmon",
+		},
+	)
+	if err != nil {
+		h.handleResponse(c, http.Unauthorized, &auth_service.UserWrongResponse{
+			Data:    "the sign is invalid",
+			IsOk:    true,
+			Message: "unable to authorize",
+		})
+		return
+	}
+
+	h.handleResponse(c, http.OK, resp)
 }
-
 
 // @Security  ApiKeyAuth
 // GetUserList godoc
