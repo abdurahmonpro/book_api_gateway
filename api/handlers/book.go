@@ -201,11 +201,6 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 		h.handleResponse(c, http.InternalServerError, err.Error())
 		return
 	}
-	resp = &book_service.BookResponse{
-		Data: []*book_service.BookData{},
-		IsOk: true,
-		Message: "ok",
-	}
 
 	h.handleResponse(c, http.OK, resp)
 }
