@@ -10,22 +10,20 @@ definitions:
       secret:
         type: string
     type: object
-  auth_service.CreateUserResponse:
-    properties:
-      data:
-        items:
-          $ref: '#/definitions/auth_service.User'
-        type: array
-      is_ok:
-        type: boolean
-      message:
-        type: string
-    type: object
   auth_service.LoginRequest:
     properties:
       name:
         type: string
       secret:
+        type: string
+    type: object
+  auth_service.OneUserResponse:
+    properties:
+      data:
+        $ref: '#/definitions/auth_service.User'
+      is_ok:
+        type: boolean
+      message:
         type: string
     type: object
   auth_service.TokenResponse:
@@ -131,9 +129,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: CreateUserResponse
+          description: OneUserResponse
           schema:
-            $ref: '#/definitions/auth_service.CreateUserResponse'
+            $ref: '#/definitions/auth_service.OneUserResponse'
         "401":
           description: the sign is invalid
           schema:
@@ -167,13 +165,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: User data
+          description: OneUserResponse
           schema:
             allOf:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/auth_service.User'
+                  $ref: '#/definitions/auth_service.OneUserResponse'
               type: object
         "400":
           description: Bad Request
@@ -251,9 +249,9 @@ paths:
       - application/json
       responses:
         "201":
-          description: UserResponse
+          description: OneUserResponse
           schema:
-            $ref: '#/definitions/auth_service.User'
+            $ref: '#/definitions/auth_service.OneUserResponse'
         "400":
           description: Invalid Argument
           schema:

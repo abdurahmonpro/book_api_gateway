@@ -115,9 +115,9 @@ const docTemplate = `{
                 "operationId": "get_user_myself",
                 "responses": {
                     "200": {
-                        "description": "CreateUserResponse",
+                        "description": "OneUserResponse",
                         "schema": {
-                            "$ref": "#/definitions/auth_service.CreateUserResponse"
+                            "$ref": "#/definitions/auth_service.OneUserResponse"
                         }
                     },
                     "401": {
@@ -174,7 +174,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "User data",
+                        "description": "OneUserResponse",
                         "schema": {
                             "allOf": [
                                 {
@@ -184,7 +184,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/auth_service.User"
+                                            "$ref": "#/definitions/auth_service.OneUserResponse"
                                         }
                                     }
                                 }
@@ -316,9 +316,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "UserResponse",
+                        "description": "OneUserResponse",
                         "schema": {
-                            "$ref": "#/definitions/auth_service.User"
+                            "$ref": "#/definitions/auth_service.OneUserResponse"
                         }
                     },
                     "400": {
@@ -400,23 +400,6 @@ const docTemplate = `{
                 }
             }
         },
-        "auth_service.CreateUserResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/auth_service.User"
-                    }
-                },
-                "is_ok": {
-                    "type": "boolean"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
         "auth_service.LoginRequest": {
             "type": "object",
             "properties": {
@@ -424,6 +407,20 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "secret": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth_service.OneUserResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/auth_service.User"
+                },
+                "is_ok": {
+                    "type": "boolean"
+                },
+                "message": {
                     "type": "string"
                 }
             }

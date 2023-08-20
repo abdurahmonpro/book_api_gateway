@@ -50,7 +50,7 @@ func (h *Handler) Login(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param signup body auth_service.CreateUser true "CreateUserRequest"
-// @Success 200 {object} http.Response{data=auth_service.User} "User data"
+// @Success 200 {object} http.Response{data=auth_service.OneUserResponse} "OneUserResponse"
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) Register(c *gin.Context) {

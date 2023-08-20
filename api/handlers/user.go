@@ -4,7 +4,6 @@ import (
 	"api_gateway/api/http"
 	"api_gateway/genproto/auth_service"
 	"context"
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param profile body auth_service.CreateUser true "CreateUserRequestBody"
-// @Success 201 {object} auth_service.User "UserResponse"
+// @Success 201 {object} auth_service.OneUserResponse "OneUserResponse"
 // @Failure 400 {object} string "Invalid Argument"
 // @Failure 500 {object} string "Server Error"
 func (h *Handler) CreateUser(c *gin.Context) {
@@ -29,7 +28,6 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		h.handleResponse(c, http.BadRequest, err.Error())
 		return
 	}
-	fmt.Println("just created")
 
 	resp, err := h.services.UserService().Create(
 		c.Request.Context(),
@@ -91,7 +89,7 @@ func (h *Handler) GetUserById(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Success 200 {object} auth_service.CreateUserResponse "CreateUserResponse"
+// @Success 200 {object} auth_service.OneUserResponse "OneUserResponse"
 // @Response 401 {object} auth_service.UserWrongResponse "the sign is invalid"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetMyself(c *gin.Context) {
