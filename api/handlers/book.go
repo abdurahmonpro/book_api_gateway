@@ -189,7 +189,6 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 		c.Request.Context(),
 		&book_service.BookPK{Id: int32(intbookid)},
 	)
-
 	if err != nil {
 		h.handleResponse(c, http.GRPCError, err.Error())
 		return
