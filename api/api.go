@@ -19,13 +19,13 @@ func SetUpAPI(r *gin.Engine, h handlers.Handler, cfg config.Config) {
 	r.Use(customCORSMiddleware())
 
 	// book
-	// r.POST("/books", h.CreateBook)
-	// r.GET("/books", h.GetBookList)
-	// // r.GET("/book/:id", h.GetBookByID)
-	// r.GET("/books/:title", h.GetBookByTitle)
+	r.POST("/books", h.CreateBook)
+	r.GET("/books", h.GetBookList)
+	// r.GET("/book/:id", h.GetBookByID)
+	r.GET("/books/:title", h.GetBookByTitle)
 	// r.PUT("/books/:id", h.UpdateBook)
-	// r.PATCH("/books/:id", h.UpdatePatchBook)
-	// r.DELETE("/books/:id", h.DeleteBook)
+	r.PATCH("/books/:id", h.UpdatePatchBook)
+	r.DELETE("/books/:id", h.DeleteBook)
 
 	//user service
 	r.POST("/user", h.CreateUser)
