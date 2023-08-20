@@ -95,7 +95,7 @@ definitions:
         items:
           $ref: '#/definitions/book_service.BookData'
         type: array
-      is_ok:
+      isOk:
         type: boolean
       message:
         type: string

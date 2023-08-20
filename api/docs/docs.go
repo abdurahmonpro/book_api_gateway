@@ -942,7 +942,7 @@ const docTemplate = `{
                         "$ref": "#/definitions/book_service.BookData"
                     }
                 },
-                "is_ok": {
+                "isOk": {
                     "type": "boolean"
                 },
                 "message": {
