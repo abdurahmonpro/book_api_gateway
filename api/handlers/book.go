@@ -65,6 +65,9 @@ func (h *Handler) CreateBook(c *gin.Context) {
 func (h *Handler) GetBookByTitle(c *gin.Context) {
 	title := c.Param("title")
 
+	// Remove the colon from the title if it's present
+	title = strings.TrimPrefix(title, ":")
+
 	resp, err := h.services.BookService().GetBookByTitle(
 		context.Background(),
 		&book_service.BookByTitle{
