@@ -6,7 +6,6 @@ import (
 	"api_gateway/genproto/book_service"
 	"api_gateway/models"
 	"context"
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -178,16 +177,10 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) DeleteBook(c *gin.Context) {
-
-	BookId := c.Param("id")
+	BookId := c.Query("id")
 
 	intbookid, err := strconv.Atoi(BookId)
 	if err != nil {
-		fmt.Println("**************************************************88")
-		fmt.Println("**************************************************88")
-		fmt.Println("**************************************************88")
-		fmt.Println("**************************************************88")
-		fmt.Println("**************************************************88")
 		return
 	}
 
@@ -197,9 +190,6 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 	)
 	if err != nil {
 		h.handleResponse(c, http.GRPCError, err.Error())
-		fmt.Println("**********************************************************")
-		fmt.Println("**********************************************************")
-		fmt.Println("**********************************************************")
 		return
 	}
 
