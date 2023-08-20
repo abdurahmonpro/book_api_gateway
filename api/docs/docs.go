@@ -631,8 +631,8 @@ const docTemplate = `{
                             "$ref": "#/definitions/auth_service.User"
                         }
                     },
-                    "400": {
-                        "description": "Invalid Argument",
+                    "401": {
+                        "description": "the sign is invalid",
                         "schema": {
                             "allOf": [
                                 {
@@ -696,7 +696,7 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "User data",
                         "schema": {
                             "allOf": [
