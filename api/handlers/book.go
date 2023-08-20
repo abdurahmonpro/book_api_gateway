@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -180,11 +181,14 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 func (h *Handler) DeleteBook(c *gin.Context) {
 	// Get the ID from the path parameter
 	bookID := c.Param("id")
+
+	// Remove the colon from the bookID
+	bookID = strings.TrimPrefix(bookID, ":")
+
 	fmt.Println(bookID)
 
 	intBookID, err := strconv.Atoi(bookID)
 	if err != nil {
-		fmt.Println(intBookID)
 		h.handleResponse(c, http.BadRequest, "Invalid ID")
 		return
 	}
