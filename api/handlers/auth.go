@@ -3,7 +3,6 @@ package handlers
 import (
 	"api_gateway/api/http"
 	"api_gateway/genproto/auth_service"
-	"errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +12,7 @@ import (
 // @Router /login [POST]
 // @Summary Login
 // @Description Login
-// @Tags Authentication	
+// @Tags Authentication
 // @Accept json
 // @Produce json
 // @Param login body auth_service.LoginRequest true "LoginRequestBody"
@@ -51,7 +50,7 @@ func (h *Handler) Login(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param signup body auth_service.CreateUser true "CreateUserRequest"
-// @Success 201 {object} http.Response{data=auth_service.User} "User data"
+// @Success 200 {object} http.Response{data=auth_service.User} "User data"
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) Register(c *gin.Context) {
@@ -64,22 +63,22 @@ func (h *Handler) Register(c *gin.Context) {
 		return
 	}
 
-	res, err := h.services.UserService().CheckUser(
-		c.Request.Context(),
-		&auth_service.CheckUserRequest{
-			Name:   register.Name,
-			Secret: register.Secret,
-		},
-	)
-	if err != nil {
-		h.handleResponse(c, http.GRPCError, err.Error())
-		return
-	}
+	// res, err := h.services.UserService().CheckUser(
+	// 	c.Request.Context(),
+	// 	&auth_service.CheckUserRequest{
+	// 		Name:   register.Name,
+	// 		Secret: register.Secret,
+	// 	},
+	// )
+	// if err != nil {
+	// 	h.handleResponse(c, http.GRPCError, err.Error())
+	// 	return
+	// }
 
-	if res.Exists && res.Registered {
-		h.handleResponse(c, http.BadRequest, errors.New("user registered").Error())
-		return
-	}
+	// if res.Exists && res.Registered {
+	// 	h.handleResponse(c, http.BadRequest, errors.New("user registered").Error())
+	// 	return
+	// }
 
 	resp, err := h.services.UserService().Create(
 		c.Request.Context(),
@@ -91,6 +90,5 @@ func (h *Handler) Register(c *gin.Context) {
 		return
 	}
 
-	h.handleResponse(c, http.Created, resp)
+	h.handleResponse(c, http.OK, resp)
 }
-

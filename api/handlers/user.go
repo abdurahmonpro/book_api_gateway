@@ -82,7 +82,7 @@ func (h *Handler) GetUserById(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {object} auth_service.User "User"
-// @Response 400 {object} http.Response{data=string} "Invalid Argument"
+// @Response 401 {object} http.Response{data=string} "the sign is invalid"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetMyself(c *gin.Context) {
 	
@@ -93,7 +93,7 @@ func (h *Handler) GetMyself(c *gin.Context) {
         },
     )
     if err != nil {
-        h.handleResponse(c, http.GRPCError, err.Error())
+        h.handleResponse(c, http.Unauthorized, err.Error())
         return
     }
 
