@@ -369,7 +369,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
+                                            "$ref": "#/definitions/book_service.OneBookResponse"
                                         }
                                     }
                                 }
@@ -946,6 +946,20 @@
                 }
             }
         },
+        "book_service.OneBookResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/book_service.BookData"
+                },
+                "isOk": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "http.Response": {
             "type": "object",
             "properties": {
@@ -964,8 +978,8 @@
                 "id": {
                     "type": "integer"
                 },
-                "status": {
-                    "type": "integer"
+                "updatepatch": {
+                    "$ref": "#/definitions/book_service.BookData"
                 }
             }
         }

@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -64,9 +63,6 @@ func (h *Handler) CreateBook(c *gin.Context) {
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) GetBookByTitle(c *gin.Context) {
 	title := c.Param("title")
-
-	// Remove the colon from the title if it's present
-	title = strings.TrimPrefix(title, ":")
 
 	resp, err := h.services.BookService().GetBookByTitle(
 		context.Background(),
@@ -152,23 +148,23 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 	}
 
 	bookid := c.Param("id")
-	bookid = strings.TrimPrefix(bookid, ":")
 
 	intbookid, err := strconv.Atoi(bookid)
-	if err != nil{
+	if err != nil {
 		return
 	}
 
 	resp, err := h.services.BookService().UpdatePatch(
 		c.Request.Context(),
 		&book_service.UpdatePatchBook{
-			Id: int32(intbookid),
-			Updpatch: &updatePatchBook.Updpatch, 
+			Id:       int32(intbookid),
+			Updpatch: &updatePatchBook.Updpatch,
 		},
 	)
-
 	if err != nil {
 		h.handleResponse(c, http.GRPCError, err.Error())
+		fmt.Println("################################################################")
+		fmt.Println("################################################################")
 		return
 	}
 
@@ -188,11 +184,8 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) DeleteBook(c *gin.Context) {
-	// Get the ID from the path parameter
-	bookID := c.Param("id")
 
-	// Remove the colon from the bookID
-	bookID = strings.TrimPrefix(bookID, ":")
+	bookID := c.Param("id")
 
 	fmt.Println(bookID)
 

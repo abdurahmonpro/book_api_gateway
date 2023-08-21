@@ -105,6 +105,15 @@ definitions:
       isbn:
         type: string
     type: object
+  book_service.OneBookResponse:
+    properties:
+      data:
+        $ref: '#/definitions/book_service.BookData'
+      isOk:
+        type: boolean
+      message:
+        type: string
+    type: object
   http.Response:
     properties:
       data: {}
@@ -117,8 +126,8 @@ definitions:
     properties:
       id:
         type: integer
-      status:
-        type: integer
+      updatepatch:
+        $ref: '#/definitions/book_service.BookData'
     type: object
 info:
   contact: {}
@@ -332,7 +341,7 @@ paths:
             - $ref: '#/definitions/http.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/book_service.BookResponse'
+                  $ref: '#/definitions/book_service.OneBookResponse'
               type: object
         "400":
           description: Bad Request

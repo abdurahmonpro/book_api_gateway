@@ -381,7 +381,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/book_service.BookResponse"
+                                            "$ref": "#/definitions/book_service.OneBookResponse"
                                         }
                                     }
                                 }
@@ -958,6 +958,20 @@ const docTemplate = `{
                 }
             }
         },
+        "book_service.OneBookResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/book_service.BookData"
+                },
+                "isOk": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "http.Response": {
             "type": "object",
             "properties": {
@@ -976,8 +990,8 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "status": {
-                    "type": "integer"
+                "updatepatch": {
+                    "$ref": "#/definitions/book_service.BookData"
                 }
             }
         }
