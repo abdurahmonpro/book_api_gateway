@@ -154,6 +154,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(updatePatchBook.Updpatch.ProtoReflect().Descriptor().FullName().Append())
 	resp, err := h.services.BookService().UpdatePatch(
 		c.Request.Context(),
 		&book_service.UpdatePatchBook{
