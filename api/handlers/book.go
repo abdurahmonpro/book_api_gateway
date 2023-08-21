@@ -137,7 +137,7 @@ func (h *Handler) GetBookList(c *gin.Context) {
 // @Produce json
 // @Param id path string true "id"
 // @Param profile body models.UpdatePatchRequest true "UpdatePatchRequestBody"
-// @Success 200 {object} http.Response{data=book_service.BookResponse} "Book data"
+// @Success 200 {object} http.Response{data=book_service.OneBookResponse} "Book data"
 // @Response 400 {object} http.Response{data=string} "Bad Request"
 // @Failure 500 {object} http.Response{data=string} "Server Error"
 func (h *Handler) UpdatePatchBook(c *gin.Context) {
@@ -145,19 +145,25 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&updatePatchBook)
 	if err != nil {
+		fmt.Println("************************8")
+		fmt.Println("************************8")
 		h.handleResponse(c, http.BadRequest, err.Error())
 		return
 	}
 
 	bookid := c.Param("id")
+	bookid = strings.TrimPrefix(bookid, ":")
 
 	intbookid, err := strconv.Atoi(bookid)
+	if err != nil{
+		return
+	}
 
 	resp, err := h.services.BookService().UpdatePatch(
 		c.Request.Context(),
 		&book_service.UpdatePatchBook{
 			Id: int32(intbookid),
-			// Status: updatePatchBook.Status, // Use the new 'Status' field
+			Updpatch: &updatePatchBook.Updpatch, 
 		},
 	)
 
