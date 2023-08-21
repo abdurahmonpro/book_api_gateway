@@ -157,7 +157,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 	fmt.Println(updatePatchBook)
 	fmt.Println(&updatePatchBook.Updpatch)
 	fmt.Println(updatePatchBook.Updpatch)
-	
+
 	resp, err := h.services.BookService().UpdatePatch(
 		c.Request.Context(),
 		&book_service.UpdatePatchBook{
@@ -168,7 +168,7 @@ func (h *Handler) UpdatePatchBook(c *gin.Context) {
 	if err != nil {
 		h.handleResponse(c, http.GRPCError, err.Error())
 		fmt.Println("################################################################")
-		fmt.Println("################################################################")
+		fmt.Println("################################## ##############################")
 		return
 	}
 
